@@ -12,12 +12,28 @@ metadata:
     {{ $key }}: {{ $value }}
     {{- end }}
 spec:
+  # check if defaultBackend should be set
+  {{- if keys $ingress.defaultBackend }}
+  defaultBackend:
+    {{- if $ingress.defaultBackend.service }}
+    service:
+      name: {{ $ingress.defaultBackend.service.name }}
+      port:
+        number: {{ $ingress.defaultBackend.service.port.number }}
+    {{- end }}
+  {{- end }}
+  # check if rules should be set
+  {{- if $ingress.rules }}
   rules:
-  {{- range $ingress.rules.host }}
+  # loop over rules keys
+  {{- range $rule := $ingress.rules }}
+  # loop over host list for same paths settings
+  {{- range  $rule.host }}
   - host: {{ . }}
     http:
       paths:
-      {{- range $path := $ingress.rules.http.paths }}
+      # loop over paths configuration
+      {{- range $path := $rule.http.paths }}
         - path: {{ $path.path }}
           pathType: {{ $path.pathType }}
           backend:
@@ -26,5 +42,7 @@ spec:
               port:
                 number: {{ $path.backend.service.port.number }}
       {{- end }}
+  {{- end }}
+  {{- end }}
   {{- end }}
 {{- end -}}

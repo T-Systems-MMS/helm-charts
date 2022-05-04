@@ -1,0 +1,39 @@
+# k8s configuration
+
+## Kind: Namespace
+# namespace:
+#   name:
+#   labels:
+#   ## key value pairs of labels that should be set for the ingress
+
+## Kind: Ingress
+# ingress:
+#   name:
+#   namespace:
+#   annotations:
+#   ## key value pairs of annotations that should be set for the ingress
+#   # should a defaultBackend be configurated
+#   defaultBackend: {}
+#   ## {} if no defaultBackend should be configurated
+#   defaultBackend:
+#   # actually only service is supported
+#     service:
+#       name:
+#       port:
+#         number:
+#   # should rules be configurated
+#   rules:
+#     KEY:
+#     # placeholder for group of hosts which should get the same configuration
+#       host:
+#       # list of hosts for which the same configration should be setup
+#       http:
+#         paths:
+#           # list of path configuration
+#           path: /
+#           pathType:
+#           backend:
+#             service:
+#               name:
+#               port:
+#                 number:
